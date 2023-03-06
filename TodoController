@@ -1,0 +1,44 @@
+package com.todo.restfulApi;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class TodoController {
+	
+	@Autowired
+	TodoService todoserv;
+	
+	@PostMapping("/todolist")
+	public Todo saveTask(@RequestBody Todo todo) {
+		
+		 return todoserv.saveTodoList(todo);
+	}
+	
+	@GetMapping("/todolist")
+	public List<Todo> listAllTask(){
+		
+		return todoserv.findAllTask();
+	}
+	
+	@PutMapping("/todolist/{id}")
+	public Todo updateTask(@RequestBody Todo todo, @PathVariable("id") long todoId) {
+		
+		return todoserv.updateTodoList(todo, todoId);
+	}
+	
+	@DeleteMapping("/todolist/{id}")
+	public void deleteTaskById(@PathVariable("id") long todoId) {
+		
+		todoserv.deleteTodoTask(todoId);
+	}
+
+}
